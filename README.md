@@ -26,3 +26,53 @@ Paste all files into a single folder (set the folder as the directory of R envir
 source("R/Case_study.R")
 ```
 ## :zap: Quick example to use ctsGRN
+```
+# Load scRNA-seq dataset
+Set the working Directory (Switch the working directory to the specified path)
+
+# Load packages
+library(Seurat)
+library(ggplot2)
+library(clustree)
+library(cowplot)
+library(dplyr)
+library(R.utils)
+library(pROC)
+library(dplyr)
+library(org.At.tair.db)
+library(clusterProfiler)
+library(AnnotationDbi)
+library(ggplot2)
+library(aPEAR)
+library(DOSE)
+library(cols4all)
+library(UpSetR)
+library(ggplot2)
+library(dplyr)
+library(purrr)
+library(miRspongeR)
+##=======================Create a Seurat object========================
+
+seurat_data<- read.csv(gzfile("Data/GSE123818_matrix.csv.gz"), row.names = 1)
+seurat_obj <- CreateSeuratObject(counts = seurat_data,
+                                 min.features = 200,
+                                 min.cells = 3, 
+                                 project = "GSE123818")
+
+##=======================Data quality control and standardization================================
+seurat_obj[["percent.mt"]] <- PercentageFeatureSet(seurat_obj, pattern='^ATMG')
+violin <- VlnPlot(seurat_obj,
+                  features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), 
+                  pt.size = 0.1,
+                  ncol = 3)
+##Set quality control standards
+seurat_obj<-subset(seurat_obj,subset=nFeature_RNA>500 & nFeature_RNA<5000 &percent.mt<0.5)
+seurat_obj <- NormalizeData(seurat_obj, normalization.method = "LogNormalize", scale.factor = 10000)
+
+#########################Three algorithms are used to construct GRN#############################
+######################### WGCNA#############################
+######################### GENIE3#############################
+######################### DeepSEM#############################
+load("Data/celltype.RData")
+load("Data/celltype_TFs.RData")
+``` 
