@@ -235,7 +235,7 @@ Xylem_TFs <- Xylem_TFs$TF
 Xylem_TFs_expr <- Xylem_expr[row.names(Xylem_expr) %in% Xylem_TFs, ]
 Xylem_matrix <- cor(t(Xylem_TFs_expr), t(Xylem_expr), use = "complete", method = 'pearson')
 
-
+##################################################
 ##=======================2.1.2-WGCNA_biadjacency_matrix_celltype========================
 library(WGCNA)
 library(ggplot2)
