@@ -7,7 +7,7 @@ library(dplyr)
 library(R.utils)
 
 # Set the working Directory (Switch the working directory to the specified path)
-setwd("E:/论文/AtScGRN")
+setwd("ctsGRN")
 
 ##=======================1.Create a Seurat object========================
 
@@ -74,7 +74,7 @@ sorted_result <- result %>%
   group_by(cluster) %>%
   arrange(cluster, desc(count))
 
-#细胞类型注释
+#Cell type annotation
 new.cluster.ids <- c("0" = "Columella", "1" = "Lateral root cap", "2" = "Lateral root cap", "3" = "Atrichoblast", "4"= "Metaphloem sieve element",  "5" = "Metaphloem sieve element", "6" = "Endodermis" , "7" = "Xylem", "8" = "Lateral root cap", "9" = "Cortex", "10" = "Endodermis", "11" = "Endodermis","12" = "Trichoblast", "13" = "Mature","14" = "Cortex")
 names(new.cluster.ids) <- levels(seurat_obj)
 seurat_obj <- RenameIdents(seurat_obj, new.cluster.ids)
@@ -301,7 +301,6 @@ graph_Atrichoblast <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Atrichoblast <- as.data.frame(get.edgelist(graph_Atrichoblast), stringsAsFactors = FALSE)
 
 graph_Columella <- graph_from_biadjacency_matrix(
   biadjacency_Columella,
@@ -311,7 +310,6 @@ graph_Columella <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Columella <- as.data.frame(get.edgelist(graph_Columella), stringsAsFactors = FALSE)
 
 graph_Cortex <- graph_from_biadjacency_matrix(
   biadjacency_Cortex,
@@ -321,7 +319,6 @@ graph_Cortex <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Cortex <- as.data.frame(get.edgelist(graph_Cortex), stringsAsFactors = FALSE)
 
 graph_Endodermis <- graph_from_biadjacency_matrix(
   biadjacency_Endodermis,
@@ -331,7 +328,6 @@ graph_Endodermis <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Endodermis <- as.data.frame(get.edgelist(graph_Endodermis), stringsAsFactors = FALSE)
 
 graph_Lateral_root_cap <- graph_from_biadjacency_matrix(
   biadjacency_Lateral_root_cap,
@@ -341,7 +337,6 @@ graph_Lateral_root_cap <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Lateral_root_cap <- as.data.frame(get.edgelist(graph_Lateral_root_cap), stringsAsFactors = FALSE)
 
 graph_Mature <- graph_from_biadjacency_matrix(
   biadjacency_Mature,
@@ -351,7 +346,6 @@ graph_Mature <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Mature <- as.data.frame(get.edgelist(graph_Mature), stringsAsFactors = FALSE)
 
 graph_Metaphloem_sieve_element <- graph_from_biadjacency_matrix(
   biadjacency_Metaphloem_sieve_element,
@@ -361,7 +355,6 @@ graph_Metaphloem_sieve_element <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Metaphloem_sieve_element <- as.data.frame(get.edgelist(graph_Metaphloem_sieve_element), stringsAsFactors = FALSE)
 
 graph_Trichoblast <- graph_from_biadjacency_matrix(
   biadjacency_Trichoblast,
@@ -371,7 +364,6 @@ graph_Trichoblast <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Trichoblast <- as.data.frame(get.edgelist(graph_Trichoblast), stringsAsFactors = FALSE)
 
 graph_Xylem <- graph_from_biadjacency_matrix(
   biadjacency_Xylem,
@@ -381,7 +373,6 @@ graph_Xylem <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Xylem <- as.data.frame(get.edgelist(graph_Xylem), stringsAsFactors = FALSE)
 
 
 ######################### 2-2 GENIE3#############################
@@ -460,11 +451,6 @@ biadjacency_matrix_Atrichoblast <- function(GRN_Atrichoblast.zscore, pvalue.cuto
 }
 
 
-wm_Atrichoblast_z <- wm_Atrichoblast
-zscore_Atrichoblast <- transform_zscore_Atrichoblast(wm_Atrichoblast_z)
-biadjacency_Atrichoblast <- biadjacency_matrix_Atrichoblast(zscore_Atrichoblast, pvalue.cutoff = 0.05)
-
-
 
 ## Function for calculating z-score of a matrix
 # mat: Input matrix
@@ -488,9 +474,6 @@ biadjacency_matrix_Columella <- function(GRN_Columella.zscore, pvalue.cutoff = 0
   return(GRN_Columella.biadjacency)
 }
 
-wm_Columella_z <- wm_Columella
-zscore_Columella <- transform_zscore_Columella(wm_Columella_z)
-biadjacency_Columella <- biadjacency_matrix_Columella(zscore_Columella, pvalue.cutoff = 0.05)
 
 
 ## Function for calculating z-score of a matrix
@@ -515,9 +498,6 @@ biadjacency_matrix_Cortex <- function(GRN_Cortex.zscore, pvalue.cutoff = 0.05){
   return(GRN_Cortex.biadjacency)
 }
 
-wm_Cortex_z <- wm_Cortex
-zscore_Cortex <- transform_zscore_Cortex(wm_Cortex_z)
-biadjacency_Cortex <- biadjacency_matrix_Cortex(zscore_Cortex, pvalue.cutoff = 0.05)
 
 
 ## Function for calculating z-score of a matrix
@@ -541,10 +521,6 @@ biadjacency_matrix_Endodermis <- function(GRN_Endodermis.zscore, pvalue.cutoff =
   GRN_Endodermis.biadjacency <- as.matrix(GRN_Endodermis.zscore > zscore.cutoff) * 1
   return(GRN_Endodermis.biadjacency)
 }
-
-wm_Endodermis_z <- wm_Endodermis
-zscore_Endodermis <- transform_zscore_Endodermis(wm_Endodermis_z)
-biadjacency_Endodermis <- biadjacency_matrix_Endodermis(zscore_Endodermis, pvalue.cutoff = 0.05)
 
 
 
@@ -570,12 +546,6 @@ biadjacency_matrix_Lateral_root_cap <- function(GRN_Lateral_root_cap.zscore, pva
   return(GRN_Lateral_root_cap.biadjacency)
 }
 
-wm_Lateral_root_cap_z <- wm_Lateral_root_cap
-zscore_Lateral_root_cap <- transform_zscore_Lateral_root_cap(wm_Lateral_root_cap_z)
-biadjacency_Lateral_root_cap <- biadjacency_matrix_Lateral_root_cap(zscore_Lateral_root_cap, pvalue.cutoff = 0.05)
-
-
-
 
 ## Function for calculating z-score of a matrix
 # mat: Input matrix
@@ -599,10 +569,6 @@ biadjacency_matrix_Metaphloem_sieve_element <- function(GRN_Metaphloem_sieve_ele
   return(GRN_Metaphloem_sieve_element.biadjacency)
 }
 
-wm_Metaphloem_sieve_element_z <- wm_Metaphloem_sieve_element
-zscore_Metaphloem_sieve_element <- transform_zscore_Metaphloem_sieve_element(wm_Metaphloem_sieve_element_z)
-biadjacency_Metaphloem_sieve_element <- biadjacency_matrix_Metaphloem_sieve_element(zscore_Metaphloem_sieve_element, pvalue.cutoff = 0.05)
-
 
 ## Function for calculating z-score of a matrix
 # mat: Input matrix
@@ -625,10 +591,6 @@ biadjacency_matrix_Trichoblast <- function(GRN_Trichoblast.zscore, pvalue.cutoff
   GRN_Trichoblast.biadjacency <- as.matrix(GRN_Trichoblast.zscore > zscore.cutoff) * 1
   return(GRN_Trichoblast.biadjacency)
 }
-
-wm_Trichoblast_z <- wm_Trichoblast
-zscore_Trichoblast <- transform_zscore_Trichoblast(wm_Trichoblast_z)
-biadjacency_Trichoblast <- biadjacency_matrix_Trichoblast(zscore_Trichoblast, pvalue.cutoff = 0.05)
 
 
 
@@ -655,11 +617,6 @@ biadjacency_matrix_Xylem <- function(GRN_Xylem.zscore, pvalue.cutoff = 0.05){
 }
 
 
-wm_Xylem_z <- wm_Xylem
-zscore_Xylem <- transform_zscore_Xylem(wm_Xylem_z)
-biadjacency_Xylem <- biadjacency_matrix_Xylem(zscore_Xylem, pvalue.cutoff = 0.05)
-
-
 ## Function for calculating z-score of a matrix
 # mat: Input matrix
 # Output: mat.zscore is the transformed zscore matrix
@@ -682,10 +639,6 @@ biadjacency_matrix_Mature <- function(GRN_Mature.zscore, pvalue.cutoff = 0.05){
   return(GRN_Mature.biadjacency)
 }
 
-wm_Mature_z <- Mature
-zscore_Mature <- transform_zscore_Mature(wm_Mature_z)
-biadjacency_Mature <- biadjacency_matrix_Xylem(zscore_Mature, pvalue.cutoff = 0.05)
-
 
 load("biadjacency_nine_celltype.RData")
 
@@ -700,7 +653,6 @@ graph_Atrichoblast <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Atrichoblast <- as.data.frame(get.edgelist(graph_Atrichoblast), stringsAsFactors = FALSE)
 
 
 graph_Columella <- graph_from_biadjacency_matrix(
@@ -711,7 +663,6 @@ graph_Columella <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Columella <- as.data.frame(get.edgelist(graph_Columella), stringsAsFactors = FALSE)
 
 
 graph_Cortex <- graph_from_biadjacency_matrix(
@@ -722,8 +673,6 @@ graph_Cortex <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Cortex <- as.data.frame(get.edgelist(graph_Cortex), stringsAsFactors = FALSE)
-
 
 graph_Endodermis <- graph_from_biadjacency_matrix(
   biadjacency_Endodermis,
@@ -733,7 +682,6 @@ graph_Endodermis <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Endodermis <- as.data.frame(get.edgelist(graph_Endodermis), stringsAsFactors = FALSE)
 
 
 graph_Lateral_root_cap <- graph_from_biadjacency_matrix(
@@ -744,8 +692,6 @@ graph_Lateral_root_cap <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Lateral_root_cap <- as.data.frame(get.edgelist(graph_Lateral_root_cap), stringsAsFactors = FALSE)
-
 
 graph_Mature <- graph_from_biadjacency_matrix(
   biadjacency_Mature,
@@ -755,7 +701,6 @@ graph_Mature <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Mature <- as.data.frame(get.edgelist(graph_Mature), stringsAsFactors = FALSE)
 
 
 graph_Metaphloem_sieve_element <- graph_from_biadjacency_matrix(
@@ -766,8 +711,6 @@ graph_Metaphloem_sieve_element <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Metaphloem_sieve_element <- as.data.frame(get.edgelist(graph_Metaphloem_sieve_element), stringsAsFactors = FALSE)
-
 
 graph_Trichoblast <- graph_from_biadjacency_matrix(
   biadjacency_Trichoblast,
@@ -777,7 +720,6 @@ graph_Trichoblast <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Trichoblast <- as.data.frame(get.edgelist(graph_Trichoblast), stringsAsFactors = FALSE)
 
 
 graph_Xylem <- graph_from_biadjacency_matrix(
@@ -788,11 +730,9 @@ graph_Xylem <- graph_from_biadjacency_matrix(
   weighted = TRUE,
   add.names = NULL
 )
-edges_Xylem <- as.data.frame(get.edgelist(graph_Xylem), stringsAsFactors = FALSE)
 
 
-######################### 2-3 DeepSEM#############################
-##########
+######################### 2-3 DeepSEM#######################################
 # The DeepSEM algorithm used in this script is based on the following open-source project：
 # Hantao Shu et al., Modeling gene regulatory networks using neural network architectures 
 # GitHub: https://github.com/HantaoShu/DeepSEM
@@ -1070,104 +1010,6 @@ key_n_Metaphloem_sieve_element <- dim(filter(deg_Metaphloem_sieve_element, n > 2
 key_n_Trichoblast <- dim(filter(deg_Trichoblast, n > 2000))[1] # 4
 key_n_Xylem <- dim(filter(deg_Xylem, n > 2000))[1] # 17
 
-# plot barplot at nine celltype
-p_Atrichoblast <- ggplot(data = deg_Atrichoblast) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Atrichoblast", y = "Number of targets", 
-       title = "TF Degree Centrality in Atrichoblast") +
-  geom_segment(aes(x = key_n_Atrichoblast, xend = key_n_Atrichoblast, y = 0, yend = 5200),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Columella <- ggplot(data = deg_Columella) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Columella", y = "Number of targets", 
-       title = "TF Degree Centrality in Columella") +
-  geom_segment(aes(x = key_n_Columella, xend = key_n_Columella, y = 0, yend = 3000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Cortex <- ggplot(data = deg_Cortex) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Cortex", y = "Number of targets",
-       title = "TF Degree Centrality in Cortex") +
-  geom_segment(aes(x = key_n_Cortex, xend = key_n_Cortex, y = 0, yend = 5000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Endodermis <- ggplot(data = deg_Endodermis) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Endodermis", y = " Number of targets", 
-       title = "TF Degree Centrality in Endodermis") +
-  geom_segment(aes(x = key_n_Endodermis, xend = key_n_Endodermis, y = 0, yend = 4000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-
-p_Lateral_root_cap <- ggplot(data = deg_Lateral_root_cap) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Lateral_root_cap", y = "Number of targets", 
-       title = "TF Degree Centrality in Lateral_root_cap") +
-  geom_segment(aes(x = key_n_Lateral_root_cap, xend = key_n_Lateral_root_cap, y = 0, yend = 5200),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Mature <- ggplot(data = deg_Mature) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Mature", y = "Number of targets", 
-       title = "TF Degree Centrality in Mature") +
-  geom_segment(aes(x = key_n_Mature, xend = key_n_Mature, y = 0, yend = 3000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Metaphloem_sieve_element <- ggplot(data = deg_Metaphloem_sieve_element) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Metaphloem_sieve_element", y = "Number of targets",
-       title = "TF Degree Centrality in Metaphloem_sieve_element") +
-  geom_segment(aes(x = key_n_Metaphloem_sieve_element, xend = key_n_Metaphloem_sieve_element, y = 0, yend = 5000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Trichoblast <- ggplot(data = deg_Trichoblast) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Trichoblast", y = " Number of targets", 
-       title = "TF Degree Centrality in Trichoblast") +
-  geom_segment(aes(x = key_n_Trichoblast, xend = key_n_Trichoblast, y = 0, yend = 4000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-p_Xylem <- ggplot(data = deg_Xylem) +
-  geom_col(mapping = aes(x = reorder(regulatoryGene, -n), y = n)) +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  labs(x = "TFs in Xylem", y = " Number of targets", 
-       title = "TF Degree Centrality in Xylem") +
-  geom_segment(aes(x = key_n_Xylem, xend = key_n_Xylem, y = 0, yend = 4000),
-               color = "red", linetype = "dashed",size = 0.3)
-
-
-
-# Put them together
-p_total <- grid.arrange(p_Atrichoblast, p_Columella, p_Cortex, p_Endodermis,p_Lateral_root_cap,p_Mature,
-                        p_Metaphloem_sieve_element,p_Trichoblast,p_Xylem, ncol = 3)
-
 ################################################################################
 # PLOT QUANTILE HEATMAP
 ################################################################################
@@ -1412,7 +1254,7 @@ summary(top100[1:100,]$max_tissue)
 
 tissue_counts <- top100 %>%
   count(max_tissue) %>%
-  mutate(max_tissue = gsub("^n", "", max_tissue))  # 去除组织名前缀的"n"
+  mutate(max_tissue = gsub("^n", "", max_tissue))  
 
 
 ggplot(tissue_counts, aes(x = reorder(max_tissue, -n), y = n, fill = max_tissue)) +
@@ -1420,10 +1262,10 @@ ggplot(tissue_counts, aes(x = reorder(max_tissue, -n), y = n, fill = max_tissue)
   geom_text(aes(label = n), vjust = -0.5, size = 3.5) +  
   labs(
     title = "Top 100 TFs with Highest CV: Cell Type Distribution",
-    x = NULL,  # 隐藏x轴标题
+    x = NULL,  
     y = "TFs Count"
   ) +
-  theme_minimal(base_size = 12) +  # 调整基础字体大小
+  theme_minimal(base_size = 12) +  
   theme(
     axis.text.x = element_text(angle = 30, hjust = 1, size = 10), 
     plot.title = element_text(hjust = 0.5, face = "bold"),  
@@ -1888,7 +1730,7 @@ UpSetR::upset(cross_dataset_df,
 
 
 # 7. Extract GO Terms shared in at least N datasets
-shared_go_terms <- cross_dataset_df[rowSums(cross_dataset_df) >= 2, ]  # 修改3为您需要的阈值
+shared_go_terms <- cross_dataset_df[rowSums(cross_dataset_df) >= 2, ]  
 print("GO terms shared in at least two datasets:")
 print(rownames(shared_go_terms))
 
@@ -1936,7 +1778,7 @@ ggplot(jaccard_melt, aes(x = Dataset1, y = Dataset2, fill = Similarity)) +
                        limits = c(0, 1), 
                        na.value = "grey90") +
   geom_text(aes(label = round(Similarity, 2)), color = "black", size = 3) +
-  labs(title = "数据集相似性矩阵 (Jaccard指数 0-1)",
+  labs(title = "Dataset similarity matrix (Jaccard index 0-1)",
        x = "", y = "", 
        fill = "Jaccard\nIndex",
        size = "Jaccard\nIndex") +
