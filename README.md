@@ -75,4 +75,5 @@ seurat_obj <- NormalizeData(seurat_obj, normalization.method = "LogNormalize", s
 ######################### DeepSEM#############################
 load("Data/celltype.RData")
 load("Data/celltype_TFs.RData")
-``` 
+``` ``` ``` ```
+``` ``` ``` ``` 
