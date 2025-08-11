@@ -1,0 +1,5 @@
+Data/celltype_edges_TF.RData filter=lfs diff=lfs merge=lfs -text
+Data/DeepSEM_GRN_edges.RData filter=lfs diff=lfs merge=lfs -text
+Data/GENIE3_GRN_edges.RData filter=lfs diff=lfs merge=lfs -text
+Data/gold_network.csv filter=lfs diff=lfs merge=lfs -text
+Data/WGCNA_GRN_edges.RData filter=lfs diff=lfs merge=lfs -text
