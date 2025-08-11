@@ -13,7 +13,12 @@ A schematic illustration of cteGRN is shown in the folowing.
 </p>
 
 ## :book: Description of each file in R and src/DeepSEM folders
-- **Case_study.R**: Case study for transcriptional regulation at cellular resolution in Arabidopsis root
+- **Case_study.R**: Case study for transcriptional regulation at cellular resolution in Arabidopsis root.
+- **model.py**:Contains the deep generative model architecture (Variational Autoencoder, VAE) for GRN inference.Implements the encoder-decoder structure with gene expression as input and regulatory probabilities as output.
+- **train.py**:Training pipeline for DeepSEM, including data loading, loss computation, and gradient updates.Supports early stopping and learning rate scheduling.
+- **utils.py**:Preprocessing (normalization, batch correction) and postprocessing (network thresholding).Helper functions for visualization (e.g., AUPRC curves) and data splitting.
+- **inference.py**:Infers gene regulatory networks from the trained VAE’s latent space.Computes edge confidence scores (e.g., gradient-based importance).
+
 ## :gear: The usage of ctsGRN
 Paste all files into a single folder (set the folder as the directory of R environment). The users can simply run the scripts as follows.
 
