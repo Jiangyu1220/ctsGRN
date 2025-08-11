@@ -6,6 +6,8 @@ Most plant GRN studies have been performed at the tissue level resolution, makin
 
 Our study provides a comprehensive cell-type-resolved overview of transcription factor-mediated gene regulatory networks in Arabidopsis root, offering valuable insights into the molecular mechanisms governing root development and establishing a reference framework for investigating plant biological processes at cellular resolution. 
 
+A schematic illustration of cteGRN is shown in the folowing.
+
 <p align="center">
   <img src="https://github.com/Jiangyu1220/ctsGRN/blob/main/ctsGRN.png" alt="Schematic illustration of Scan" border="0.1">
 </p>
